@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,43 +30,47 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-let renderTableBody = () => {
-  return (
-    <>
-      <StyledTableCell component="th" scope="row">
-        Bùi Công Anh
-      </StyledTableCell>
-      <StyledTableCell>conganh@gmail.com</StyledTableCell>
-      <StyledTableCell>0321325554</StyledTableCell>
-      <StyledTableCell>
-        <Button
-          variant="contained"
-          style={{
-            padding: "3px",
-            backgroundColor: "green",
-            width: "40px",
-            margin: "4px",
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          variant="contained"
-          style={{
-            padding: "3px",
-            backgroundColor: "red",
-            width: "60px",
-            margin: "4px",
-          }}
-        >
-          Delete
-        </Button>
-      </StyledTableCell>
-    </>
-  );
-};
-
 export default function TableData() {
+  let userListArr = useSelector((state) => state.userArr);
+  let renderTableBody = () => {
+    return userListArr.map((item) => {
+      return (
+        <>
+          <StyledTableRow>
+            <StyledTableCell component="th" scope="row">
+              {item.name}
+            </StyledTableCell>
+            <StyledTableCell>{item.email}</StyledTableCell>
+            <StyledTableCell>{item.phone}</StyledTableCell>
+            <StyledTableCell>
+              <Button
+                variant="contained"
+                style={{
+                  padding: "3px",
+                  backgroundColor: "green",
+                  width: "40px",
+                  margin: "4px",
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  padding: "3px",
+                  backgroundColor: "red",
+                  width: "60px",
+                  margin: "4px",
+                }}
+              >
+                Delete
+              </Button>
+            </StyledTableCell>
+          </StyledTableRow>
+        </>
+      );
+    });
+  };
   return (
     <div style={{ margin: "0 24px" }}>
       <TableContainer sx={{ margin: "0 0px" }} component={Paper}>
@@ -78,9 +83,7 @@ export default function TableData() {
               <StyledTableCell sx={{ width: "15%" }}>Action</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            <StyledTableRow>{renderTableBody()}</StyledTableRow>
-          </TableBody>
+          <TableBody>{renderTableBody()}</TableBody>
         </Table>
       </TableContainer>
     </div>

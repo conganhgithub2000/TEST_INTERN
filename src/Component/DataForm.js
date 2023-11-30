@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { ADD_CONTACT } from "./redux/constant/contact";
 
 const style = {
   position: "absolute",
@@ -21,6 +23,7 @@ export default function DataForm() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  let dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -29,7 +32,7 @@ export default function DataForm() {
       phone: "",
     },
     onSubmit: (values) => {
-      console.log("🚀 ~ file: DataForm.js:32 ~ DataForm ~ values:", values);
+      dispatch({ type: ADD_CONTACT, payload: values });
     },
   });
 
