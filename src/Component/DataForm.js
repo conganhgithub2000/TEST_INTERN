@@ -30,7 +30,6 @@ export default function DataForm() {
     },
     onSubmit: (values) => {
       console.log("🚀 ~ file: DataForm.js:32 ~ DataForm ~ values:", values);
-      
     },
   });
 
@@ -38,7 +37,7 @@ export default function DataForm() {
     <div style={{ textAlign: "right" }}>
       <Button
         style={{
-          margin: "30px",
+          margin: "40px 24px",
           padding: "20px 15px",
           backgroundColor: "green",
         }}
