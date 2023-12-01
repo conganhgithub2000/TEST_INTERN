@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,6 +13,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { SEARCH_CONTACT } from "./redux/constant/contact";
+import { stringToSlug } from "./util/method";
+import { useDispatch } from "react-redux";
 
 const pages = ["Products", "Pricing", "Blog"];
 
@@ -59,6 +63,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const [query, setQuery] = useState("");
+  let userListArr = useSelector((state) => state.userArr);
+  let dispatch = useDispatch();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -153,6 +161,27 @@ export default function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleSearch = (event) => {
+    const { value } = event.target;
+    setQuery(value);
+    let tuKhoa = stringToSlug(value);
+    console.log("🚀 ~ file: Header.js:169 ~ handleSearch ~ tuKhoa:", tuKhoa);
+    let arrSearch = [];
+    if (value === "") {
+      arrSearch = [];
+    } else {
+      for (let index = 0; index < userListArr.length; index++) {
+        let itemContact = userListArr[index];
+        let name = stringToSlug(userListArr[index].name);
+        if (name.search(tuKhoa) !== -1) {
+          arrSearch.push(itemContact);
+        }
+      }
+    }
+    dispatch({ type: SEARCH_CONTACT, payload: arrSearch });
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -232,8 +261,13 @@ export default function Header() {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+              onChange={handleSearch}
+              inputProps={{
+                "aria-label": "search",
+                "data-testid": "searchField",
+              }}
               sx={{ minWidth: "40ch" }}
+              value={query}
             />
           </Search>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

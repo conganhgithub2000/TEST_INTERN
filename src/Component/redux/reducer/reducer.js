@@ -1,8 +1,9 @@
 import { userArr } from "../../data";
-import { ADD_CONTACT } from "../constant/contact";
+import { ADD_CONTACT, SEARCH_CONTACT } from "../constant/contact";
 
 const initialState = {
   userArr: userArr,
+  arrSearch: [],
 };
 
 export let ContactReducer = (state = initialState, { type, payload }) => {
@@ -11,6 +12,9 @@ export let ContactReducer = (state = initialState, { type, payload }) => {
       let cloneUsers = [...state.userArr];
       cloneUsers.push(payload);
       return { ...state, userArr: cloneUsers };
+    }
+    case SEARCH_CONTACT: {
+      return { ...state, arrSearch: payload };
     }
 
     default:

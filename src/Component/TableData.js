@@ -32,44 +32,86 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function TableData() {
   let userListArr = useSelector((state) => state.userArr);
+  let arrSearch = useSelector((state) => state.arrSearch);
+  
   let renderTableBody = () => {
-    return userListArr.map((item) => {
-      return (
-        <>
-          <StyledTableRow>
-            <StyledTableCell component="th" scope="row">
-              {item.name}
-            </StyledTableCell>
-            <StyledTableCell>{item.email}</StyledTableCell>
-            <StyledTableCell>{item.phone}</StyledTableCell>
-            <StyledTableCell>
-              <Button
-                variant="contained"
-                style={{
-                  padding: "3px",
-                  backgroundColor: "green",
-                  width: "40px",
-                  margin: "4px",
-                }}
-              >
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                style={{
-                  padding: "3px",
-                  backgroundColor: "red",
-                  width: "60px",
-                  margin: "4px",
-                }}
-              >
-                Delete
-              </Button>
-            </StyledTableCell>
-          </StyledTableRow>
-        </>
-      );
-    });
+    if (arrSearch.length > 0) {
+      return arrSearch.map((item) => {
+        return (
+          <>
+            <StyledTableRow>
+              <StyledTableCell component="th" scope="row">
+                {item.name}
+              </StyledTableCell>
+              <StyledTableCell>{item.email}</StyledTableCell>
+              <StyledTableCell>{item.phone}</StyledTableCell>
+              <StyledTableCell>
+                <Button
+                  variant="contained"
+                  style={{
+                    padding: "3px",
+                    backgroundColor: "green",
+                    width: "40px",
+                    margin: "4px",
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    padding: "3px",
+                    backgroundColor: "red",
+                    width: "60px",
+                    margin: "4px",
+                  }}
+                >
+                  Delete
+                </Button>
+              </StyledTableCell>
+            </StyledTableRow>
+          </>
+        );
+      });
+    } else {
+      return userListArr.map((item) => {
+        return (
+          <>
+            <StyledTableRow>
+              <StyledTableCell component="th" scope="row">
+                {item.name}
+              </StyledTableCell>
+              <StyledTableCell>{item.email}</StyledTableCell>
+              <StyledTableCell>{item.phone}</StyledTableCell>
+              <StyledTableCell>
+                <Button
+                  variant="contained"
+                  style={{
+                    padding: "3px",
+                    backgroundColor: "green",
+                    width: "40px",
+                    margin: "4px",
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    padding: "3px",
+                    backgroundColor: "red",
+                    width: "60px",
+                    margin: "4px",
+                  }}
+                >
+                  Delete
+                </Button>
+              </StyledTableCell>
+            </StyledTableRow>
+          </>
+        );
+      });
+    }
   };
   return (
     <div style={{ margin: "0 24px" }}>
