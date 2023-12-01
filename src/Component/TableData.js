@@ -8,7 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import {
+  DELETE_CONTACT,
+} from "./redux/constant/contact";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,10 +37,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function TableData() {
   let userListArr = useSelector((state) => state.userArr);
   let arrSearch = useSelector((state) => state.arrSearch);
-  
+  let dispatch = useDispatch();
+
+  let handleChangeDelete = (index) => {
+    dispatch({ type: DELETE_CONTACT, payload: index });
+  };
+
   let renderTableBody = () => {
     if (arrSearch.length > 0) {
-      return arrSearch.map((item) => {
+      return arrSearch.map((item, index) => {
         return (
           <>
             <StyledTableRow>
@@ -74,7 +83,7 @@ export default function TableData() {
         );
       });
     } else {
-      return userListArr.map((item) => {
+      return userListArr.map((item, index) => {
         return (
           <>
             <StyledTableRow>
@@ -102,6 +111,9 @@ export default function TableData() {
                     backgroundColor: "red",
                     width: "60px",
                     margin: "4px",
+                  }}
+                  onClick={() => {
+                    handleChangeDelete(index);
                   }}
                 >
                   Delete
