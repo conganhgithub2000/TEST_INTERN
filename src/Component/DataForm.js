@@ -145,7 +145,7 @@ export default function DataForm() {
                   }}
                   type="submit"
                 >
-                  Submit
+                  Add Contact
                 </Button>
               </div>
             </form>
